@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>4 Second Assignment</title>
+    <!-- chart CSS -->
+    <style type="text/css">
+        .highcharts-figure,
+        .highcharts-data-table table {
+            min-width: 600px;
+            max-width: 800px;
+            margin: 1em auto;
+            position:absolute;
+            top: 70%;
+            left: 70%;
+            transform: translate(-50%, -50%);
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, Arial;
+            border-collapse: collapse;
+            border: 1px white;
+            margin: 20px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .body {
+            background-color: gray;
+            padding: 0;
+            margin: 0;
+
+        }
+        .container {
+            position: absolute;
+            left: 50%;
+            top:30%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+
+        .button {
+            border-radius: 4px;
+            background: black;
+            width:300px;
+            height: 150px;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+            content:"Start";
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top:50%;
+            text-align: center;
+            color: white;
+        }
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+            color: white;
+            text-align: center;
+            font-size: 40px;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .container-fluid {
+            position: absolute;
+            left: 60%;
+            top:30%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="Startbutton" style="position: relative;">
+        <button id="buttoncolor"class="button" style="vertical-align:middle" onclick="button()"><span>Start</span></button>
+    </div>
+</div>
+
+<div class="container-fluid" id="result">
+    <div class="result" style="position: absolute;">
+        <table class="table table-striped" id="table">
+            <thead>
+            <tr>
+                <th scope="col">Attempt Num</th>
+                <th scope="col">Time (Seconds)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row" id="try">0</th>
+                <td id="time">0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container1" id="Results">
+    <table class="table table-striped" id="table2">
+        <thead>
+        <h3>4 Second Challenge</h3>
+        <tr>
+            <th scope="col">Total Attempts</th>
+            <th scope="col">Avg Time</th>
+            <th scope="col">Max Time</th>
+            <th scope="col">Min Time</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td id="total attempts">0</td>
+            <td id="avg">0</td>
+            <th id="max">0</th>
+            <td id="min">0</td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Boostrap links and JC, CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- chart external lines -->
+<script src="../../code/highcharts.js"></script>
+<script src="../../code/modules/series-label.js"></script>
+<script src="../../code/modules/exporting.js"></script>
+<script src="../../code/modules/export-data.js"></script>
+<script src="../../code/modules/accessibility.js"></script>
+<!-- HighChart libery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/highcharts.js" integrity="sha512-8cJ3Lf1cN3ld0jUEZy26UOg+A5YGLguP6Xi6bKLyYurrxht+xkLJ9oH9rc7pvNiYsmYuTvpe3wwS6LriK/oWDg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+</figure>
+
+<script type="text/javascript">
+
+    var startTime, endTime, elapsedTime;
+    var timerGoing = false;
+    const setTime=4;
+    var attempts = 0;
+    var time = 0;
+    var attemptArray = [];
+    var elapsedTimeArray = [];
+    var elapsedTimeArray2 = [];
+
+    function button() {
+        var x = document.getElementsByClassName("button")[0];
+        if (x.innerHTML === "Start") {
+            x.innerHTML = "Stop";
+            x.style.fontSize = "40px";
+        }
+        else if (x.innerHTML === "Stop") {
+            x.innerHTML = "Start";
+            x.style.fontSize = "40px";
+        }
+        else {
+            x.innerHTML = "Stop";
+            x.style.fontSize = "40px";
+        }
+
+        startTimer();
+
+        if (x.innerHTML === "Start") {
+            addRow();
+            addData();
+            newArray();
+            addResult();
+        }
+    }
+    function startTimer() {
+        if (timerGoing) {
+            timerGoing = false;
+            endTime = new Date();
+            elapsedTime = endTime - startTime;
+            elapsedTime = elapsedTime / 1000;
+            attempts++;
+            if (elapsedTime > setTime) {
+
+                if (elapsedTime <= (setTime+.2)) {
+                    document.getElementsByClassName("button")[0].style.background = "blue";
+                }
+                else if (elapsedTime <= (setTime+.5)) {
+                    document.getElementsByClassName("button")[0].style.background = "yellow";
+                }
+                else {
+                    document.getElementsByClassName("button")[0].style.background = "red";
+                }
+            }
+            else if (elapsedTime == setTime) {
+
+                document.getElementsByClassName("button")[0].style.background = "green";
+
+            }
+            else if (elapsedTime < setTime) {
+
+                if (elapsedTime >= (setTime-.2)) {
+                    document.getElementsByClassName("button")[0].style.background = "blue";
+                }
+                else if (elapsedTime >= (setTime-.5)) {
+                    document.getElementsByClassName("button")[0].style.background = "yellow";
+                }
+                else {
+                    document.getElementsByClassName("button")[0].style.background = "red";
+                }
+            }
+        }
+        else {
+            timerGoing = true;
+            startTime = new Date();
+        }
+
+    }
+
+    function newArray() {
+        elapsedTimeArray2.push(elapsedTime);
+        console.log(elapsedTimeArray2);
+    }
+
+    function addResult() {
+        let TotalAttempt = elapsedTimeArray2.length;
+        let AvgElement = elapsedTimeArray2.reduce((a, b) => a + b, 0) / elapsedTimeArray2.length;
+        let MaxElement = Math.max(...elapsedTimeArray2);
+        let MinElement = Math.min(...elapsedTimeArray2);
+
+
+        let table = document.getElementById("table2");
+        let row = table.rows[1];
+        let cell = row.cells[0];
+        cell.innerHTML = TotalAttempt;
+
+
+        let row2 = table.rows[1];
+        let cell2 = row2.cells[1];
+        cell2.innerHTML = AvgElement.toFixed(3);
+
+
+        let row3 = table.rows[1];
+        let cell3 = row3.cells[2];
+        cell3.innerHTML = MaxElement;
+
+        let row4 = table.rows[1];
+        let cell4 = row4.cells[3];
+        cell4.innerHTML = MinElement;
+
+    }
+
+    function addRow() {
+        var table = document.getElementById("table");
+        var row = table.insertRow(1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = attempts;
+        cell2.innerHTML = elapsedTime.toFixed(3);
+    }
+
+    var chart = Highcharts.chart('container', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Seconds of Each Attempt'
+        },
+        xAxis: {
+            title: {
+                text: 'Attempt Num'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Seconds'
+            },
+            min: 0
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'TrendLine',
+            data: elapsedTimeArray
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+
+    });
+    function addData() {
+        var elapsedTimeArray =chart.series[0].options.data;
+        var newpoint = [attempts, elapsedTime]
+        elapsedTimeArray.push(newpoint);
+        chart.series[0].setData(elapsedTimeArray);
+
+    }
+
+    $(document).ready(function () {
+        $(".button").click(function () {
+            $("#result").show();
+        });
+    });
+
+</script>
+</body>
+</html>
