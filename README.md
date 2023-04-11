@@ -12,4 +12,4 @@
 
 Preview Picture
 
-![image]()
+![image](https://github.com/Parker782001/4-Second-Assignment/blob/main/4secPreview.png)
