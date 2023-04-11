@@ -1,1 +1,15 @@
-# 4-Second-Assignment
+# 4 Second Assignment
+
+# Parker Hahn
+
+## Class Details
+***Class:*** IST 256  
+**Date:** 04/11/2023
+
+## Links and images
+
+[4 Second Assignment]()
+
+Preview Picture
+
+![image]()
